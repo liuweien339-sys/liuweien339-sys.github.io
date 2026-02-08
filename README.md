@@ -1,2 +1,2 @@
 # gm339.github.io
-liuweien339-sys 个人小占
+liuweien339-sys 个人小站
