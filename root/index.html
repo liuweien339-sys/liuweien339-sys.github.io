@@ -1,1 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .menu-btn {
+            position: fixed;
+            top: 45px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            background: #24292e;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 100;
+            padding: 8px;
+        }
+       
+        .menu-line {
+            width: 100%;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+        }
+       
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+            padding-top: 70px;
+            transition: left 0.3s;
+            z-index: 99;
+        }
+       
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+       
+        .sidebar a:hover {
+            background: #f5f5f5;
+        }
+       
+        .content {
+            margin-left: 0;
+            padding: 80px 20px 20px;
+            transition: margin-left 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-btn" onclick="toggleMenu()">
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+        <div class="menu-line"></div>
+    </div>
+   
+    <div class="sidebar" id="sidebar">
+        <a href="/">首页</a>
+        <a href="/modules/">面具模块</a>
+        <a href="/root/">Root方案</a>
+    </div>
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+           
+            if (sidebar.style.left === '0px') {
+                sidebar.style.left = '-250px';
+                content.style.marginLeft = '0';
+            } else {
+                sidebar.style.left = '0px';
+                content.style.marginLeft = '250px';
+            }
+        }
+       
+        document.getElementById('content').addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.style.left === '0px') {
+                sidebar.style.left = '-250px';
+                this.style.marginLeft = '0';
+            }
+        });
+    </script>
+</body>
+</html>
+    <script src="https://keepandroidopen.org/banner.js?size=minimal&animation=off"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #24292e;
+        }
+        .intro {
+            background: #f6f8fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+  <section class="download-section">
+    <p>KitsureMask(MagiskDeleta)</p>
+    <p>德尔塔面具</p>
+    <div style="margin-top: 20px;">
+        <a href="https://kitsune-mask.vercel.app/#download"
+           style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px;">
+            📥跳转
+        </a>
+    </div>
+  <section class="download-section">
+    <p>Magisk Alpha</p>
+    <p>阿尔法面具</p>
+    <div style="margin-top: 20px;">
+        <a href="https://mrzzoxo.lanzoue.com/b0zk06l6j"
+           style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px;">
+            📥跳转
+        </a>
+    </div>
+    <section class="download-section">
+    <p>Magisk</p>
+    <p>面具</p>
+    <div style="margin-top: 20px;">
+        <a href="https://github.com/topjohnwu/Magisk/releases"
+           style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px;">
+            📥跳转
+        </a>
+    </div>
+    <section class="download-section">
+    <p>SukiSU Ultra</p>
+    <p>杂鱼</p>
+    <div style="margin-top: 20px;">
+        <a href="https://github.com/SukiSU-Ultra/SukiSU-Ultra/releases"
+           style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px;">
+            📥跳转
+        </a>
+    </div>
+    <section class="download-section">
+    <p>KernelSU</p>
+    <p>KSU/方块</p>
+    <div style="margin-top: 20px;">
+        <a href="https://github.com/tiann/KernelSU"
+           style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px;">
+            📥跳转
+        </a>
+    </div>
+    <section class="download-section">
+    <p>KernelSU Next</p>
+    <p>KSU Next</p>
+    <div style="margin-top: 20px;">
+        <a href="https://github.com/KernelSU-Next/KernelSU-Next/releases"
+           style="display: inline-block; padding: 12px 24px; background: #007bff; color: white; text-decoration: none; border-radius: 6px;">
+            📥跳转
+        </a>
+    </div>
+ </section>
+</body>
+</html>
 
