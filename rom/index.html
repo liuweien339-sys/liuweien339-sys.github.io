@@ -1,295 +1,109 @@
 <!DOCTYPE html>
-<html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>第三方ROM</title>
     <style>
-        .menu-btn {
-            position: fixed;
-            top: 45px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-            background: #24292e;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 100;
-            padding: 8px;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: system-ui, -apple-system, 'Roboto', 'Noto Sans', 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+            padding-bottom: 120px;
         }
-       
-        .menu-line {
-            width: 100%;
-            height: 3px;
-            background: white;
-            margin: 5px 0;
-        }
-       
+
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        .hero { text-align: center; padding: 2rem 1rem 1rem; margin-bottom: 2rem; border-bottom: 1px solid #e2e8f0; }
+        h1 { font-size: 3rem; font-weight: 700; background: linear-gradient(135deg, #1e3c72, #2b3b4e); background-clip: text; -webkit-background-clip: text; color: transparent; letter-spacing: -0.02em; }
+        .tagline { font-size: 1.2rem; color: #475569; margin-top: 0.5rem; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .card { background: white; border-radius: 1.5rem; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05); transition: all 0.2s ease; border: 1px solid #eef2ff; }
+        .card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2); border-color: #cbd5e1; }
+        .card h3 { font-size: 1.35rem; margin-bottom: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .card p { margin-bottom: 1rem; color: #475569; }
+        .download-btn { display: inline-block; background: #0f172a; color: white; padding: 0.7rem 1.8rem; border-radius: 40px; text-decoration: none; font-weight: 500; margin-top: 1rem; transition: background 0.2s; }
+        .download-btn:hover { background: #2d3a5e; }
+
         .sidebar {
             position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background: white;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-            padding-top: 70px;
-            transition: left 0.3s;
-            z-index: 99;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 600px;
+            height: 60px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            
+            background: rgba(255, 255, 255, 0.45); 
+            backdrop-filter: blur(16px) saturate(180%); 
+            -webkit-backdrop-filter: blur(16px) saturate(180%); 
+            
+            border: 1px solid rgba(255, 255, 255, 0.6); 
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            z-index: 999;
+            transition: all 0.3s ease;
         }
-       
+
+        .sidebar.scrolled {
+            background: rgba(255, 255, 255, 0.75);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
         .sidebar a {
-            display: block;
-            padding: 15px;
-            color: #333;
-            text-decoration: none;
-            border-bottom: 1px solid #eee;
+            display: flex; justify-content: center; align-items: center;
+            padding: 8px 12px; color: #333; text-decoration: none;
+            font-size: 14px; font-weight: 500; border-radius: 12px; transition: all 0.2s ease;
         }
-       
-        .sidebar a:hover {
-            background: #f5f5f5;
-        }
-       
-        .content {
-            margin-left: 0;
-            padding: 80px 20px 20px;
-            transition: margin-left 0.3s;
-        }
-                    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        .sidebar a:hover { background: rgba(0, 0, 0, 0.08); color: #000; transform: scale(1.05); }
 
-    body {
-      font-family: system-ui, -apple-system, 'Roboto', 'Noto Sans', 'Segoe UI', Helvetica, Arial, sans-serif;
-      background: #f8fafc;
-      color: #0f172a;
-      line-height: 1.5;
-      padding: 2rem 1rem;
-    }
+        .search-icon { cursor: pointer; font-size: 18px; padding: 8px; border-radius: 12px; transition: all 0.2s ease; }
+        .search-icon:hover { background: rgba(0, 0, 0, 0.08); }
 
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+        .search-input {
+            width: 0; padding: 0; border: none; outline: none;
+            background: rgba(0, 0, 0, 0.05); border-radius: 12px;
+            font-size: 14px; color: #333; transition: all 0.3s ease; opacity: 0;
+        }
+        .search-input.active { width: 120px; padding: 8px 12px; opacity: 1; margin-right: 5px; }
 
-    .hero {
-      text-align: center;
-      padding: 2rem 1rem 1rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    h1 {
-      font-size: 3rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #1e3c72, #2b3b4e);
-      background-clip: text;
-      -webkit-background-clip: text;
-      color: transparent;
-      letter-spacing: -0.02em;
-    }
-    .tagline {
-      font-size: 1.2rem;
-      color: #475569;
-      margin-top: 0.5rem;
-    }
-    .badge-group {
-      margin-top: 1.2rem;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.6rem;
-    }
-    .badge {
-      background: #eef2ff;
-      padding: 0.25rem 0.8rem;
-      border-radius: 30px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: #1e40af;
-    }
-    .badge-highlight {
-      background: #1e293b;
-      color: #f8fafc;
-    }
+        .clear-btn {
+            cursor: pointer; font-size: 16px; padding: 4px 8px; border-radius: 12px;
+            transition: all 0.2s ease; display: none; color: #666;
+        }
+        .clear-btn:hover { background: rgba(0, 0, 0, 0.08); color: #000; }
+        .clear-btn.visible { display: block; }
+        
+        @media (prefers-color-scheme: dark) {
+            body { background: #0b1120; color: #eef2ff; }
+            .card { background: #111827; border-color: #1f2a44; }
+            .card:hover { border-color: #334155; }
+            .hero { border-bottom-color: #1f2a44; }
+            .download-btn { background: #2d3a5e; }
+            .download-btn:hover { background: #4a5c82; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    .card {
-      background: white;
-      border-radius: 1.5rem;
-      padding: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03), 0 1px 2px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
-      border: 1px solid #eef2ff;
-    }
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.2);
-      border-color: #cbd5e1;
-    }
-    .card h3 {
-      font-size: 1.35rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .card ul {
-      padding-left: 1.2rem;
-      color: #1e293b;
-    }
-    .card li {
-      margin: 0.6rem 0;
-    }
-    code {
-      background: #f1f5f9;
-      padding: 0.2rem 0.4rem;
-      border-radius: 8px;
-      font-family: 'JetBrains Mono', 'SF Mono', monospace;
-      font-size: 0.85rem;
-    }
-    .download-btn {
-      display: inline-block;
-      background: #0f172a;
-      color: white;
-      padding: 0.7rem 1.8rem;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 500;
-      margin-top: 1rem;
-      transition: background 0.2s;
-    }
-    .download-btn:hover {
-      background: #2d3a5e;
-    }
-    hr {
-      border: none;
-      border-top: 1px solid #e2e8f0;
-      margin: 2rem 0;
-    }
-    footer {
-      text-align: center;
-      font-size: 0.85rem;
-      color: #62748c;
-      margin-top: 3rem;
-    }
+            .sidebar { background: rgba(30, 41, 59, 0.55); border: 1px solid rgba(255, 255, 255, 0.15); }
+            .sidebar.scrolled { background: rgba(30, 41, 59, 0.85); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
+            .sidebar a { color: #cbd5e1; }
+            .sidebar a:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
 
-    @media (prefers-color-scheme: dark) {
-      body {
-        background: #0b1120;
-        color: #eef2ff;
-      }
-      .card {
-        background: #111827;
-        border-color: #1f2a44;
-      }
-      .card:hover {
-        border-color: #334155;
-      }
-      .badge {
-        background: #1e293b;
-        color: #cbd5e1;
-      }
-      code {
-        background: #1e293b;
-        color: #facc15;
-      }
-      .hero {
-        border-bottom-color: #1f2a44;
-      }
-      .download-btn {
-        background: #2d3a5e;
-      }
-      .download-btn:hover {
-        background: #4a5c82;
-      }
-    </style>
-</head>
-<a href="/roms" 
-   style="position: fixed; top: 8px; left: 8px; 
-          font-size: 18px; text-decoration: none; 
-          color: #333; z-index: 9999;
-          background: rgba(255,255,255,0.9); 
-          padding: 2px 10px; border-radius: 16px; 
-          box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-          font-weight: bold;">
-  → 去往搜索页面
-</a>
-<body>
-    <div class="menu-btn" onclick="toggleMenu()">
-        <div class="menu-line"></div>
-        <div class="menu-line"></div>
-        <div class="menu-line"></div>
-    </div>
-   
-    <div class="sidebar" id="sidebar">
-        <a href="/">首页</a>
-        <a href="/module/">面具模块</a>
-        <a href="/root/">Root方案</a>
-        <a href="/rom/">第三方ROM</a>
-        <a href="/TWKP/">我的内核项目</a>
-        <a href="/tech/">教程</a>
-    </div>
-    <script>
-        function toggleMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('content');
-           
-            if (sidebar.style.left === '0px') {
-                sidebar.style.left = '-250px';
-                content.style.marginLeft = '0';
-            } else {
-                sidebar.style.left = '0px';
-                content.style.marginLeft = '250px';
-            }
-        }
-       
-        document.getElementById('content').addEventListener('click', function() {
-            const sidebar = document.getElementById('sidebar');
-            if (sidebar.style.left === '0px') {
-                sidebar.style.left = '-250px';
-                this.style.marginLeft = '0';
-            }
-        });
-    </script>
-</body>
-</html>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-            color: #333;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        h1 {
-            color: #24292e;
-        }
-        .intro {
-            background: #f6f8fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
+            .search-icon:hover { background: rgba(255, 255, 255, 0.15); }
+            .search-input { background: rgba(255, 255, 255, 0.1); color: #fff; }
+            .clear-btn { color: #94a3b8; }
+            .clear-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
         }
     </style>
 </head>
 <body>
-<title>第三方ROM</title>
-  <header>
-        <p>第三方ROM</p>
-  </header>
+
   </div>
     <div class="card">
       <h3>LineageOS</h3>
@@ -362,5 +176,68 @@
       </ol>
       <a class="download-btn" href="https://grapheneos.org/">📥 跳转下载页面</a>
     </div>
+    
+    <nav class="sidebar" id="sidebar">
+        <div class="search-icon" onclick="toggleSearch()">🔍</div>
+        <input type="text" id="search-input" class="search-input" placeholder="搜索..." onkeyup="filterCards()">
+        <div class="clear-btn" id="clear-btn" onclick="clearSearch()">✕</div>
+        
+        <a href="/">首页</a>
+        <a href="/module/">模块</a>
+        <a href="/root/">Root方案</a>
+        <a href="/rom/">第三方ROM</a>
+        <a href="/TWKP/">我的内核项目</a>
+        <a href="/tech/">教程</a>
+    </nav>
+
+    <script>
+        window.addEventListener('scroll', function() {
+            const sidebar = document.getElementById('sidebar');
+            if (window.scrollY > 50) {
+                sidebar.classList.add('scrolled');
+            } else {
+                sidebar.classList.remove('scrolled');
+            }
+        });
+
+        function toggleSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.classList.toggle('active');
+            if (searchInput.classList.contains('active')) {
+                searchInput.focus();
+                searchInput.value = '';
+                filterCards(); 
+            } else {
+                searchInput.blur();
+                clearSearch();
+            }
+        }
+
+        function filterCards() {
+            const keyword = document.getElementById('search-input').value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+            const clearBtn = document.getElementById('clear-btn');
+
+            if (keyword.length > 0) {
+                clearBtn.classList.add('visible');
+            } else {
+                clearBtn.classList.remove('visible');
+            }
+
+            cards.forEach(card => {
+                const title = card.querySelector('h3')?.textContent.toLowerCase() || '';
+                const desc = card.querySelector('p')?.textContent.toLowerCase() || '';
+                card.style.display = (title.includes(keyword) || desc.includes(keyword)) ? 'block' : 'none';
+            });
+        }
+
+        function clearSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.value = '';
+            document.getElementById('clear-btn').classList.remove('visible');
+            filterCards();
+            searchInput.focus();
+        }
+    </script>
 </body>
 </html>
