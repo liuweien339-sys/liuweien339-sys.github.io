@@ -64,7 +64,11 @@
             font-size: 14px; font-weight: 500; border-radius: 12px; transition: all 0.2s ease;
         }
         .sidebar a:hover { background: rgba(0, 0, 0, 0.08); color: #000; transform: scale(1.05); }
-
+        .sidebar a.active {
+        background: #0f172a;
+        color: #ffffff;     
+        transform: scale(1.05); 
+        }
         .search-icon { cursor: pointer; font-size: 18px; padding: 8px; border-radius: 12px; transition: all 0.2s ease; }
         .search-icon:hover { background: rgba(0, 0, 0, 0.08); }
 
@@ -94,7 +98,8 @@
             .sidebar.scrolled { background: rgba(30, 41, 59, 0.85); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4); }
             .sidebar a { color: #cbd5e1; }
             .sidebar a:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
-
+            .sidebar a.active { background: #eef2ff; color: #0b1120; }
+            .search-icon:hover { background: rgba(255, 255, 255, 0.15); }
             .search-icon:hover { background: rgba(255, 255, 255, 0.15); }
             .search-input { background: rgba(255, 255, 255, 0.1); color: #fff; }
             .clear-btn { color: #94a3b8; }
@@ -190,7 +195,21 @@
                 sidebar.classList.remove('scrolled');
             }
         });
-
+        
+        document.addEventListener('DOMContentLoaded', function() {
+          const currentPath = window.location.pathname;
+    
+          const navLinks = document.querySelectorAll('.sidebar a');
+    
+          navLinks.forEach(link => {
+            const linkPath = new URL(link.href).pathname;
+        
+              if (currentPath === linkPath || (currentPath.endsWith('/') && linkPath.endsWith('/') && currentPath.split('/').filter(Boolean).pop() === linkPath.split('/').filter(Boolean).pop())) {
+                link.classList.add('active');
+               }
+           });
+        });
+        
         function toggleSearch() {
             const searchInput = document.getElementById('search-input');
             searchInput.classList.toggle('active');
