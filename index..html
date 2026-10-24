@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>欢迎</title>
+    <style>
+.modal-overlay {
+        display: none; 
+        position: fixed;
+        left: 0; top: 0;
+        width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000; 
+      }
+ 
+        .modal-overlay.show {
+        display: block;
+       }
+
+        .modal-box {
+        background: white;
+        width: 90%; max-width: 400px;
+        margin: 100px auto; /* 居中显示 */
+        padding: 20px;
+        border-radius: 10px;
+        position: relative;
+        text-align: center;
+       }
+
+        .modal-close {
+        position: absolute;
+        right: 12px; top: 8px;
+        font-size: 24px;
+        border: none; background: none;
+        cursor: pointer;
+       }
+    </style>
+</head>
+<div id="myModal" class="modal-overlay">
+  <div class="modal-box">
+    <button class="modal-close">&times;</button>
+    <h2>欢迎来到该网页</h2>
+    <p>该站并未完成开发 敬请期待</p>
+  </div>
+</div>
+
+<script>
+  const modal = document.getElementById("myModal");
+  const closeBtn = document.querySelector(".modal-close");
+
+  window.onload = function() {
+    modal.classList.add("show");
+  };
+
+  closeBtn.addEventListener("click", function() {
+    modal.classList.remove("show");
+  });
+
+  modal.addEventListener("click", function(event) {
+    if (event.target === modal) {
+      modal.classList.remove("show");
+    }
+  });
+
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Escape") {
+      modal.classList.remove("show");
+    }
+  });
+</script>
+<body>
+<html>
